@@ -9,14 +9,16 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      const url = `https://content.guardianapis.com/world/${country}?api-key=35930e1c-07e6-49e2-a899-304bfe7015f4&show-fields=thumbnail`
+      const url = `https://content.guardianapis.com/world/${country}?api-key=35930e1c-07e6-49e2-a899-304bfe7015f4&show-fields=thumbnail&page=${page}`
 
       const response = await fetch(url)
       const data = await response.json()
-      setArticles(data.response.results)
+      setArticles((prevArticles) => [...prevArticles, ...data.response.results])
     }
+
+    setArticles([])
     fetchData()
-  }, [country])
+  }, [country, page])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -40,7 +42,7 @@ export default function Home() {
   }, [targetRef])
 
   function handleCountryClick(country) {
-    const encodedCountry = country.replace(' ', '%20')
+    const encodedCountry = encodeURIComponent(country)
     setCountry(encodedCountry)
     setPage(1)
   }
