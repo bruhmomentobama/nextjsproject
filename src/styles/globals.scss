@@ -1,2 +1,16 @@
 @import "~bootstrap/scss/bootstrap";
 @import "~react-toastify/dist/ReactToastify.css";
+@font-face {
+  font-family: 'My Custom Font';
+  src: url('/cs_regular.ttf') format('truetype');
+}
+.custom-font {
+  font-family: 'My Custom Font', sans-serif;
+}
+.button-hover:hover {
+  background-color: #333;
+  color: #fff;
+}
+body {
+background-image: url("https://img.itch.zone/aW1hZ2UvNTQzNDMyLzY1MDQwMzAucG5n/original/aRTU1s.png");
+}
