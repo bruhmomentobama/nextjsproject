@@ -6,14 +6,10 @@ export default function Home() {
   const [page, setPage] = useState(1)
   const targetRef = useRef(null)
   const [source, setSource] = useState('')
-  const API_KEY = '8e2111a360824635a170e0ba8f06f179'
 
   useEffect(() => {
     async function fetchData() {
-      let url = `https://newsapi.org/v2/top-headlines?language=en&apiKey=${API_KEY}&pageSize=20&page=${page}`
-      if (source) {
-        url += `&sources=${source}`
-      }
+      const url = `/api/news?source=${source}&page=${page}`
 
       const response = await fetch(url)
       const data = await response.json()
@@ -29,7 +25,7 @@ export default function Home() {
     if (source) {
       fetchData()
     }
-  }, [source, page, API_KEY])
+  }, [source, page])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
