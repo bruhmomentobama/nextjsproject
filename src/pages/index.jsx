@@ -56,6 +56,48 @@ export default function Home() {
     setSource(sourceId)
   }
 
+  const newsselect = () => {
+    if (!source) {
+      return <h2 className={`${styles.loadingMessage} text-center`}>Select a news outlet provider to view their articles.</h2>
+    }
+
+    if (articles && articles.length === 0) {
+      return <h2 className={`${styles.loadingMessage} text-center`}>Loading articles...</h2>
+    }
+
+    return (
+      <ul className={`${styles.articlesList}`}>
+        {articles.map((article, index) => (
+          <li
+            key={article.url}
+            className={`${styles.articleItem} ${
+              index % 3 === 2 ? styles.lastInRow : ''
+            }`}
+          >
+            <a
+              href={article.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none' }}
+            >
+              {article.urlToImage && (
+                <img // eslint-disable-line
+                  src={article.urlToImage}
+                  alt={article.title}
+                  className={`${styles.articleImage}`}
+                  style={{ marginTop: '20px' }}
+                />
+              )}
+              <h5 style={{ textAlign: 'center' }}>{article.title}</h5>
+            </a>
+          </li>
+        ))}
+
+        <li ref={targetRef} />
+      </ul>
+    )
+  }
+
   return (
     <div>
       <h1 className="text-center my-5 custom-font" style={{ color: 'white' }}>
@@ -90,43 +132,7 @@ export default function Home() {
       </nav>
 
       <div className="container border" style={{ backgroundColor: 'white' }}>
-        {source ? (
-          articles && articles.length > 0 ? (
-            <ul className={`${styles.articlesList}`}>
-              {articles.map((article, index) => (
-                <li
-                  key={article.url}
-                  className={`${styles.articleItem} ${
-                    index % 3 === 2 ? styles.lastInRow : ''
-                  }`}
-                >
-                  <a
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    {article.urlToImage && (
-                    <img
-                      src={article.urlToImage}
-                      alt={article.title}
-                      className={`${styles.articleImage}`}
-                      style={{ marginTop: '20px' }}
-                    />
-                    )}
-                    <h5 style={{ textAlign: 'center' }}>{article.title}</h5>
-                  </a>
-                </li>
-              ))}
-
-              <li ref={targetRef} />
-            </ul>
-          ) : (
-            <h2 className={`${styles.loadingMessage} text-center`}>Loading articles...</h2>
-          )
-        ) : (
-          <h2 className={`${styles.loadingMessage} text-center`}>Select a news outlet provider to view their articles.</h2>
-        )}
+        {newsselect()}
       </div>
 
     </div>
