@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build",
+    "vercel-build": "next build",
     "start": "next start",
     "lint": "next lint",
     "migrate": "dotenv -e .env.development.local -- npx prisma migrate dev",
